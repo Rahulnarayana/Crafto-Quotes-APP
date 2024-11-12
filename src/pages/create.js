@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { uploadImage, createQuote } from '../utils/api';
 import { useRouter } from 'next/router';
@@ -16,6 +16,13 @@ const CreateQuotePage = () => {
   const [loading, setLoading] = useState(false);
   const [imageLoading, setImageLoading] = useState(false);
   const router = useRouter();
+
+  // Redirect if not authenticated
+  useEffect(() => {
+    if (!token) {
+      router.push('/login');
+    }
+  }, [token, router]);
 
   const handleImageUpload = async (e) => {
     const file = e.target.files[0];
@@ -105,8 +112,9 @@ const CreateQuotePage = () => {
               <button
                 type="submit"
                 disabled={!text || !mediaUrl || loading}
-                className= { `inline-flex items-center rounded-md bg-blue-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 ${!text || !mediaUrl || loading    ? 'bg-blue-500 text-white hover:bg-blue-600 focus-visible:outline-blue-500'
-                : 'bg-gray-300 text-gray-500 cursor-not-allowed'}  `}
+                className={`inline-flex items-center rounded-md px-3 py-2 text-sm font-semibold text-white shadow-sm ${
+                  !text || !mediaUrl || loading ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-blue-500 hover:bg-indigo-500'
+                }`}
               >
                 {loading ? 'Creating...' : 'Create'}
               </button>

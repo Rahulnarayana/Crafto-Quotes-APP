@@ -4,8 +4,10 @@ import { getQuotes } from '../utils/api';
 import Link from 'next/link';
 import NavBar from '@/components/MenuBar';
 import Footer from '@/components/Footer';
+import { useRouter } from 'next/router';
 
 const QuotesPage = () => {
+  const router = useRouter();
   const token = useSelector((state) => state.auth.token);
   const [quotes, setQuotes] = useState([]);
   const [offset, setOffset] = useState(0);
@@ -16,6 +18,12 @@ const QuotesPage = () => {
   const limit = 20;
 
   useEffect(() => {
+    // Redirect to login if not authenticated
+    if (!token) {
+      router.push('/login');
+      return;
+    }
+
     const fetchQuotes = async () => {
       if (loading || !hasMore) return;
 
@@ -41,10 +49,8 @@ const QuotesPage = () => {
       }
     };
 
-    if (token) {
-      fetchQuotes();
-    }
-  }, [token, offset, loading, hasMore]);
+    fetchQuotes();
+  }, [token, offset, loading, hasMore, router]);
 
   return (
     <div className="flex flex-col min-h-screen">
