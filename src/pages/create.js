@@ -111,9 +111,10 @@ const CreateQuotePage = () => {
 
               <button
                 type="submit"
-                disabled={!text || !mediaUrl || loading}
+                disabled={text && mediaUrl? false :true}
                 className={`inline-flex items-center rounded-md px-3 py-2 text-sm font-semibold text-white shadow-sm ${
-                  !text || !mediaUrl || loading ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-blue-500 hover:bg-indigo-500'
+                  text && mediaUrl ?  'bg-blue-500 text-white hover:bg-blue-600 focus-visible:outline-blue-500'
+                  : 'bg-gray-300 text-gray-500 cursor-not-allowed'
                 }`}
               >
                 {loading ? 'Creating...' : 'Create'}

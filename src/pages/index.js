@@ -14,7 +14,7 @@ const LoginPage = () => {
   const router = useRouter();
 
   const handleSubmit = async (e) => {
-    console.log("ddd", e)
+    
     e.preventDefault();
 
     // Basic validation for empty fields
