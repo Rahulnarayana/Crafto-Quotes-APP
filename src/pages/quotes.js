@@ -20,7 +20,7 @@ const QuotesPage = () => {
   useEffect(() => {
     // Redirect to login if not authenticated
     if (!token) {
-      router.push('/login');
+      router.push('/');
       return;
     }
 
